@@ -216,7 +216,7 @@ public class HelloWorld extends Application {
                if(imgDir == null)
                   desc = "";
                List<String> ingredients = FXCollections.observableArrayList();
-               ingredients.addAll(searchPageListView.getItems());
+               ingredients.addAll(addPageListView.getItems());
                Recipe recipe = new Recipe(name, desc, imgDir, ingredients);
                recipe.setID(recipeInfo.recipe_dir.getTableSize()+"");
                addPageImageView.setImage(new Image("plate.png"));
