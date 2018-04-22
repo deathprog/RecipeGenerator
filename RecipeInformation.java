@@ -219,37 +219,34 @@ public class RecipeInformation {
    }
    
    // Save two table
-   public void save() {
-   
-      File f = new File(recipeInformationFile);
-      if (f.exists()) {
-         f.delete(); 
-         System.out.println("Recipe information saved.");
-      }
-   
-      String buffer = "";
-   
-      for (int i = 0; i < this.recipe_ingredient.getTableSize(); i++) {
-         String ID = this.recipe_ingredient.getCell(i, 0);
-         buffer += "info\n";
-         buffer += ID + "\n";
-         buffer += ID + "\n";
-         buffer += ID + "\n";
-         buffer += this.recipe_ingredient.getCell(i, 1) + "\n";
-         buffer += this.recipe_ingredient.getCell(i, 2) + "\n";
-         buffer += this.getDirByID(ID) + "\n";
-      }
-   
-      try {
-         f.createNewFile();
-         FileOutputStream out = new FileOutputStream(f);
-         out.write(buffer.getBytes());
-         out.close();
-      } 
-      catch (Exception e) {
-         System.out.println("Something wrong with RecipeInformation.save()");
-         return;
-      }
-   
-   }
+    public void save() {
+
+        File f = new File(recipeInformationFile);
+        if (f.exists()) {
+            f.delete(); 
+            System.out.println("Recipe information saved.");
+        }
+
+        String buffer = "";
+
+        for (int i = 0; i < this.recipe_ingredient.getTableSize(); i++) {
+            String ID = this.recipe_ingredient.getCell(i, 0);
+            buffer += "info\n";
+            buffer += ID + "\n";
+            buffer += this.recipe_ingredient.getCell(i, 1) + "\n";
+            buffer += this.recipe_ingredient.getCell(i, 2) + "\n";
+            buffer += this.getDirByID(ID) + "\n";
+        }
+
+        try {
+            f.createNewFile();
+            FileOutputStream out = new FileOutputStream(f);
+            out.write(buffer.getBytes());
+            out.close();
+        } catch (Exception e) {
+            System.out.println("Something wrong with RecipeInformation.save()");
+            return;
+        }
+
+    }
 }
