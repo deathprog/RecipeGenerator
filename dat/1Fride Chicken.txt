@@ -1,8 +1,8 @@
 ID
-5
+1
 Name
-food5
+Fride Chicken
 Image directory
 
 Description
-food5
+Fride a chicken!
