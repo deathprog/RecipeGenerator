@@ -159,6 +159,8 @@ public class HelloWorld extends Application {
                ObservableList<Recipe> recipes = FXCollections.observableArrayList();
                for (int r = 0; r < recipeInfo.searched_table.getTableSize(); r++) {
                   //Add a recipe to the list only if you have at least 1 common ingredient
+                  //System.out.println("Total # of ingredients: "+recipeInfo.getIngredientNum(recipeInfo.searched_table.getCell(r, 0)));
+                  //System.out.println("# of ingredients you lack: "+recipeInfo.searched_table.getCell(r, 2));
                   if(recipeInfo.getIngredientNum(recipeInfo.searched_table.getCell(r, 0)) > Integer.parseInt(recipeInfo.searched_table.getCell(r, 2)))
                      recipes.add(new Recipe(recipeInfo.searched_table.getCell(r, 0), recipeInfo.searched_table.getCell(r, 1), recipeInfo.searched_table.getCell(r, 2)));
                }
@@ -218,7 +220,7 @@ public class HelloWorld extends Application {
                List<String> ingredients = FXCollections.observableArrayList();
                ingredients.addAll(addPageListView.getItems());
                Recipe recipe = new Recipe(name, desc, imgDir, ingredients);
-               recipe.setID(recipeInfo.recipe_dir.getTableSize()+"");
+               recipe.setID(recipeInfo.recipe_dir.getTableSize()+1+"");
                addPageImageView.setImage(new Image("plate.png"));
                
                

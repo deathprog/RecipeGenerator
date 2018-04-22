@@ -1,8 +1,0 @@
-ID
-7
-Name
-samplefood
-Image directory
-
-Description
-sample description

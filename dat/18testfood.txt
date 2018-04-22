@@ -1,8 +1,0 @@
-ID
-18
-Name
-testfood
-Image directory
-
-Description
-test desc

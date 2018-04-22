@@ -23,13 +23,13 @@ public class RecipeInformation {
    
       for (int i = 0; i < recipe_ingredient.getTableSize(); i++) {
          int n_lack = this.compare_material(all_ingredient, recipe_ingredient.getCell(i, 2));
-         if (n_lack < 3) {
+         //if (n_lack < 3) {
             List<String> tuple = new ArrayList<String>();
             tuple.add(recipe_ingredient.getCell(i, 0));
             tuple.add(recipe_ingredient.getCell(i, 1));
             tuple.add(Integer.toString(n_lack));
             searched_table.insert(tuple);
-         }
+         //}
       }
    
    }
