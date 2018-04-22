@@ -211,7 +211,6 @@ public class RecipeInformation {
          return;
       }
    
-   
       List<String> tuple = new ArrayList<String>();
       tuple.add(Integer.toString(count));
       tuple.add(recipe.getName());
@@ -222,6 +221,21 @@ public class RecipeInformation {
       tuple.add(recipe.getID());
       tuple.add(fileDir);
       this.recipe_dir.insert(tuple);
+   }
+   
+   // Remove a recipe
+   public void removeRecipe(String ID) {
+    for (int i = 0; i < this.recipe_ingredient.getTableSize(); i++) {
+     if(ID.equals(this.recipe_ingredient.getCell(i, 0))) {
+      this.recipe_ingredient.remove(i);
+     }
+    }
+    
+    for (int i = 0; i < this.recipe_dir.getTableSize(); i++) {
+     if(ID.equals(this.recipe_dir.getCell(i, 0))){
+      this.recipe_dir.remove(i);
+     }
+    }
    }
    
    // Save two table
