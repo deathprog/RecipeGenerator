@@ -43,7 +43,7 @@ public class Recipe{
    public String getIngredientString() {
       String result = "";
       for (int i = 0; i < ingredients.size(); i++) {
-         result += ingredients.get(i);
+         result += ingredients.get(i) + " ";
       }
       return result;
    }
