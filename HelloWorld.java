@@ -98,7 +98,7 @@ public class HelloWorld extends Application {
       
       
       
-   
+      stage.getIcons().add(new Image("plate.png"));
       stage.setTitle("Recipe Generator");
       stage.setScene(searchScene);
       stage.show();
