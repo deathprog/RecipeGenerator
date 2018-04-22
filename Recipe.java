@@ -72,8 +72,16 @@ public class Recipe{
       return this.description;
    }
 
+   public void setDescription(String description) {
+	   this.description = description;
+   }
+   
    public String getImageDir() {
       return imageDir;
+   }
+   
+   public void setImageDir(String dir) {
+	   this.imageDir = dir;
    }
    
    public Recipe(String id, String name, String lack){

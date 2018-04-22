@@ -4,15 +4,19 @@ import java.io.*;
 
 public class RecipeInformation {
 
- // For load
+   // Fields for load
    public String recipeInformationFile = "recipe_information.txt";
    public Table recipe_ingredient;
    public Table recipe_dir;
    public List<String> all_ingredients;
 
- // For search
+   // Fields for search
    public Table searched_table;
-
+   
+   
+   // Methods
+   
+   // Search by ingredient, the result will be stored in this.searched_table
    public void search(List<String> all_ingredient) {
    
       List<String> attribute = new ArrayList<String>();
@@ -33,7 +37,8 @@ public class RecipeInformation {
       }
    
    }
-
+   
+   // Compare the given and the needed ingredient, and shows how much ingrednet lack
    private int compare_material(List<String> user, String data) {
       Scanner sc = new Scanner(data);
       int n_lack = 0;
@@ -53,10 +58,12 @@ public class RecipeInformation {
       return n_lack;
    }
 
+   // Constructor
    public RecipeInformation() {
       this.loadFile();
    }
 
+   // Lode recipe_ingredient and recipe_dir from file
    public boolean loadFile() {
    
     // File.
@@ -112,6 +119,7 @@ public class RecipeInformation {
       return true;
    }
 
+   // A helper for finding all the ingredients, add ingredient into all_ingredients
    private void addIngredient(String ings) {
       Scanner sc = new Scanner(ings);
       while (sc.hasNext()) {
@@ -123,6 +131,7 @@ public class RecipeInformation {
       sc.close();
    }
 
+   // Print recipe_ingredient and recipe_dir
    public void printTables() {
       System.out.println("recipe_ingredient");
       recipe_ingredient.print();
@@ -134,6 +143,7 @@ public class RecipeInformation {
       System.out.println(all_ingredients.toString());
    }
    
+   // Get dir from recipe_dir by ID
    public String  getDirByID(String ID) {
       for (int i = 0; i < this.recipe_dir.getTableSize(); i++) {
          if (this.recipe_dir.getCell(i, 0).equals(ID)) {
@@ -143,7 +153,8 @@ public class RecipeInformation {
       System.out.println("ID not found");
       return null;
    }
-
+   
+   // Return the ingredient of a recipe as one String such as ¡°chicken beef¡±
    public String getIngredient(String ID) {
       for (int i = 0; i < this.recipe_ingredient.getTableSize(); i++) {
          if (this.recipe_ingredient.getCell(i, 0).equals(ID)) {
@@ -154,6 +165,7 @@ public class RecipeInformation {
       return null;
    }
 
+   // Return the number of ingredient of a recipe
    public int getIngredientNum(String ID) {
       String ingredient = getIngredient(ID);
       if (ingredient == null) {
@@ -247,7 +259,7 @@ public class RecipeInformation {
    }
    
    // Save two table
-    public void save() {
+   public void save() {
 
         File f = new File(recipeInformationFile);
         if (f.exists()) {
@@ -277,4 +289,58 @@ public class RecipeInformation {
         }
 
     }
+   
+   // Generate Recipe
+   public void getRecipe(String ID) {
+	   
+	   String fileDir = getDirByID(String ID)
+	   Recipe recipe = new Recipe(ID, getCell(ID, recipe_ingredient, 1), getCell(ID, searched_table, 2)); // #lack is 0
+	   
+	   File f = new File(fileDir);
+	   if(!f.exists()) {
+		   System.out.println("Error in getRecipe(String ID)");
+		   return;
+	   }
+	   
+	   try {
+		   Scanner sc = new Scanner(f);
+		   while (sc.hasNextLine()) {
+			   if (sc.nextLine().equals("Image directory")) {
+				   recipe.setImageDir(sc.nextLine());
+			   }
+			   if (sc.nextLine().equals("Description")) {
+				   String description = "";
+				   while(sc.hasNextLine()) {
+					   description += sc.nextLine();
+				   }
+				   recipe.setDescription(description);
+			   }
+		   }
+	   } catch (Execption e) {
+		   System.out.println("Error in getRecipe(String ID) 2");
+	   }
+	   
+	   return;
+   }
+   
+   // Get row by ID
+   private List<String> getRow (String ID, Table table) {
+	   for (int i = 0; i < table.getTableSize(); i++) {
+		   if (ID.equals(table.getCell(i, 0))) {
+			   return table.getRow(i);
+		   }
+	   }
+	   return null;
+   }
+   
+   // Get cell by ID, column
+   private String getCell (String ID, Table table, int column) {
+	   for (int i = 0; i < table.getTableSize(); i++) {
+		   if (ID.equals(table.getCell(i, 0))) {
+			   return table.getCell(i, column);
+		   }
+	   }
+	   return null;
+   }
+   
 }
