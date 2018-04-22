@@ -179,8 +179,14 @@ public class RecipeInformation {
    
       File f = new File(fileDir);
       while (f.exists()) {
-         f.delete(); 
-         System.out.println("Recipe have been modified");
+        f.delete(); 
+        System.out.println("Recipe have been modified");
+      }
+      
+      int count = 1;
+      for (int j = 0; j  < this.recipe_ingredient.getTableSize(); j++) {
+        if (Integer.toString(count).equals(this.recipe_ingredient.getCell(j, 0)))
+          count++;
       }
       
       try {
@@ -188,21 +194,14 @@ public class RecipeInformation {
         FileOutputStream out = new FileOutputStream(f);
         String temp = "";
         
-        int count = 1;
-        for (int j = 0; j  < this.recipe_ingredient.getTableSize(); j++) {
-          if (Integer.toString(count).equals(this.recipe_ingredient.getCell(i, 0)))
-            count++;
-        }
-        
-        
         temp += "ID\n";
         temp += Integer.toString(count) + "\n";
-         temp += "Name\n";
-         temp += recipe.getName() + "\n";
-         temp += "Image directory\n";
-         temp += recipe.getImageDir() + "\n";
-         temp += "Description\n";
-         temp += recipe.getDescription() + "\n";
+        temp += "Name\n";
+        temp += recipe.getName() + "\n";
+        temp += "Image directory\n";
+        temp += recipe.getImageDir() + "\n";
+        temp += "Description\n";
+        temp += recipe.getDescription() + "\n";
       
          out.write(temp.getBytes());
          out.close();
@@ -214,7 +213,7 @@ public class RecipeInformation {
    
    
       List<String> tuple = new ArrayList<String>();
-      tuple.add(recipe.getID());
+      tuple.add(Integer.toString(count));
       tuple.add(recipe.getName());
       tuple.add(recipe.getIngredientString());
       this.recipe_ingredient.insert(tuple);
