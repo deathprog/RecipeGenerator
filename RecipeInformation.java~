@@ -23,13 +23,13 @@ public class RecipeInformation {
    
       for (int i = 0; i < recipe_ingredient.getTableSize(); i++) {
          int n_lack = this.compare_material(all_ingredient, recipe_ingredient.getCell(i, 2));
-         if (n_lack < 3) {
+         //if (n_lack < 3) {
             List<String> tuple = new ArrayList<String>();
             tuple.add(recipe_ingredient.getCell(i, 0));
             tuple.add(recipe_ingredient.getCell(i, 1));
             tuple.add(Integer.toString(n_lack));
             searched_table.insert(tuple);
-         }
+         //}
       }
    
    }
@@ -225,17 +225,17 @@ public class RecipeInformation {
    
    // Remove a recipe
    public void removeRecipe(String ID) {
-	   for (int i = 0; i < this.recipe_ingredient.getTableSize(); i++) {
-		   if(ID.equals(this.recipe_ingredient.getCell(i, 0)) {
-			   this.recipe_ingredient.remove(i);
-		   }
-	   }
-	   
-	   for (int i = 0; i < this.recipe_dir.getTableSize(); i++) {
-		   if(ID.equals(this.recipe_dir.getCell(i, 0)){
-			   this.recipe_dir.remove(i);
-		   }
-	   }
+    for (int i = 0; i < this.recipe_ingredient.getTableSize(); i++) {
+     if(ID.equals(this.recipe_ingredient.getCell(i, 0))) {
+      this.recipe_ingredient.remove(i);
+     }
+    }
+    
+    for (int i = 0; i < this.recipe_dir.getTableSize(); i++) {
+     if(ID.equals(this.recipe_dir.getCell(i, 0))){
+      this.recipe_dir.remove(i);
+     }
+    }
    }
    
    // Save two table

@@ -1,5 +1,25 @@
 info
 1
-cake
-milk eggs flour sugar cream 
-dat/1cake.txt
+food0
+ingredient1 ingredient2 ingredient3
+file/food0
+info
+2
+food1
+ingredient1 ingredient2
+file/food1
+info
+3
+food2
+ingredient1 ingredient3
+file/food2
+info
+4
+food3
+ingredient2 ingredient3
+file/food3
+info
+5
+food5
+5 
+dat/5food5.txt

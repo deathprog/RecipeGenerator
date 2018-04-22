@@ -184,10 +184,18 @@ public class RecipeInformation {
       }
       
       int count = 1;
-      for (int j = 0; j  < this.recipe_ingredient.getTableSize(); j++) {
-        if (Integer.toString(count).equals(this.recipe_ingredient.getCell(j, 0)))
-          count++;
+      Boolean check = true;
+      while (check) {
+        check = false;
+        for (int j = 0; j  < this.recipe_ingredient.getTableSize(); j++) {
+          if (Integer.toString(count).equals(this.recipe_ingredient.getCell(j, 0))) {
+            count++;
+            check = true;
+          }
+        }
       }
+      
+      recipe.setID(Integer.toString(count));
       
       try {
         f.createNewFile();
