@@ -92,6 +92,7 @@ public class HelloWorld extends Application {
       TableView searchPageTableView = (TableView)searchPage.lookup("#searchPage_tableView");
       Button searchPageAddRecipeButton = (Button)searchPage.lookup("#searchPage_addRecipe_button");
       Button searchPageClearIngredientsButton = (Button)searchPage.lookup("#searchPage_clearIngredients_button");
+      Label searchPageResultLabel = (Label)searchPage.lookup("#searchPage_result_label");
       
       
       
@@ -177,6 +178,9 @@ public class HelloWorld extends Application {
                
                //Clear the text in the textfield when you search
                searchPageTextField.clear( );
+               
+               //Show user how many search results were returned
+               searchPageResultLabel.setText("Search returned " +searchPageTableView.getItems().size()+ " out of " +recipeInfo.recipe_dir.getTableSize()+ " results.");
                
                //Offer to add a new recipe if no matching recipes are found
                if(recipes.size() == 0)

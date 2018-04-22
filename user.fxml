@@ -70,6 +70,7 @@
             <Label layoutX="44.0" layoutY="321.0" text="Search by name instead?" textFill="#0e00f7" />
             <Button id="searchPage_addRecipe_button" layoutX="283.0" layoutY="326.0" mnemonicParsing="false" text="Add Recipe" />
             <Button id="searchPage_clearIngredients_button" layoutX="140.0" layoutY="287.0" mnemonicParsing="false" text="Clear Ingredients" />
+            <Label id="searchPage_result_label" layoutX="404.0" layoutY="330.0" />
          </children>
     </AnchorPane>
   </children>
