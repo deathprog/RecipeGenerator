@@ -4,13 +4,13 @@ import java.io.*;
 
 public class RecipeInformation {
 
- // For load
+	// For load
    public String recipeInformationFile = "recipe_information.txt";
    public Table recipe_ingredient;
    public Table recipe_dir;
    public List<String> all_ingredients;
 
- // For search
+	// For search
    public Table searched_table;
 
    public void search(List<String> all_ingredient) {
@@ -59,9 +59,9 @@ public class RecipeInformation {
 
    public boolean loadFile() {
    
-    // File.
+   	// File.
       File f = new File(recipeInformationFile);
-    
+   	
       Scanner sc = null;
       try {
          sc = new Scanner(f);
@@ -70,23 +70,23 @@ public class RecipeInformation {
          return false;
       }
    
-    // Initialize recipe_ingredient.
+   	// Initialize recipe_ingredient.
       List<String> attribute = new ArrayList<String>();
       attribute.add("id");
       attribute.add("name");
       attribute.add("material");
       this.recipe_ingredient = new Table(attribute);
    
-    // Initialize recipe_dir.
+   	// Initialize recipe_dir.
       attribute = new ArrayList<String>();
       attribute.add("id");
       attribute.add("dir");
       this.recipe_dir = new Table(attribute);
    
-    // Initialize all_ingredients.
+   	// Initialize all_ingredients.
       all_ingredients = new ArrayList<String>();
    
-    // Read
+   	// Read
       String line = null;
       String ID = null;
       while (sc.hasNextLine()) {
@@ -182,21 +182,14 @@ public class RecipeInformation {
          f.delete(); 
          System.out.println("Recipe have been modified");
       }
-      
+   
       try {
-        f.createNewFile();
-        FileOutputStream out = new FileOutputStream(f);
-        String temp = "";
-        
-        int count = 1;
-        for (int j = 0; j  < this.recipe_ingredient.getTableSize(); j++) {
-          if (Integer.toString(count).equals(this.recipe_ingredient.getCell(i, 0)))
-            count++;
-        }
-        
-        
-        temp += "ID\n";
-        temp += Integer.toString(count) + "\n";
+         f.createNewFile();
+         FileOutputStream out = new FileOutputStream(f);
+         String temp = "";
+      
+         temp += "ID\n";
+         temp += recipe.getID() + "\n";
          temp += "Name\n";
          temp += recipe.getName() + "\n";
          temp += "Image directory\n";
