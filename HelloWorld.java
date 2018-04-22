@@ -163,7 +163,8 @@ public class HelloWorld extends Application {
                   //System.out.println("Total # of ingredients: "+recipeInfo.getIngredientNum(recipeInfo.searched_table.getCell(r, 0)));
                   //System.out.println("# of ingredients you lack: "+recipeInfo.searched_table.getCell(r, 2));
                   if(recipeInfo.getIngredientNum(recipeInfo.searched_table.getCell(r, 0)) > Integer.parseInt(recipeInfo.searched_table.getCell(r, 2)))
-                     recipes.add(new Recipe(recipeInfo.searched_table.getCell(r, 0), recipeInfo.searched_table.getCell(r, 1), recipeInfo.searched_table.getCell(r, 2)));
+                     recipes.add(new Recipe(recipeInfo.searched_table.getCell(r, 0), recipeInfo.searched_table.getCell(r, 1), recipeInfo.searched_table.getCell(r, 2), 
+                     100 - ((int)(Integer.parseInt(recipeInfo.searched_table.getCell(r, 2)) / 1.0 / recipeInfo.getIngredientNum(recipeInfo.searched_table.getCell(r, 0)) * 100))));
                }
                searchPageTableView.setItems(recipes);
                
@@ -171,8 +172,8 @@ public class HelloWorld extends Application {
                idCol.setCellValueFactory(new PropertyValueFactory("id"));
                TableColumn<Recipe,String> nameCol = new TableColumn<Recipe,String>("Name");
                nameCol.setCellValueFactory(new PropertyValueFactory("name"));
-               TableColumn<Recipe,String> lackCol = new TableColumn<Recipe,String>("#Lack");
-               lackCol.setCellValueFactory(new PropertyValueFactory("lack"));   
+               TableColumn<Recipe,Integer> lackCol = new TableColumn<Recipe,Integer>("% Match");
+               lackCol.setCellValueFactory(new PropertyValueFactory("matchPercentage"));   
                            
                searchPageTableView.getColumns().setAll(idCol, nameCol, lackCol);
                

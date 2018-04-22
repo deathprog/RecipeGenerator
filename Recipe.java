@@ -3,6 +3,8 @@ import javafx.beans.property.SimpleStringProperty;
 import java.util.ArrayList;
 import javafx.scene.image.ImageView;
 import java.util.List;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 
 public class Recipe{
 
@@ -10,6 +12,8 @@ public class Recipe{
    private StringProperty id;
    private StringProperty name;
    private StringProperty lack;
+   //private StringProperty matchPercentage;
+   private IntegerProperty matchPercentage;
    private String description;
    private ImageView image;
    private String imageDir;
@@ -40,6 +44,22 @@ public class Recipe{
       return lack; 
    } 
    
+   /*public void setMatchPercentage(String value) { matchPercentageProperty().set(value); }
+   public String getMatchPercentageProperty() { 
+      return matchPercentageProperty().get(); }
+   public StringProperty matchPercentageProperty() { 
+      if (matchPercentage == null) matchPercentage = new SimpleStringProperty(this, "%");
+      return matchPercentage; 
+   }*/
+   
+   public void setMatchPercentage(Integer value) { matchPercentageProperty().set(value); }
+   public Integer getMatchPercentageProperty() { 
+      return matchPercentageProperty().get(); }
+   public IntegerProperty matchPercentageProperty() { 
+      if (matchPercentage == null) matchPercentage = new SimpleIntegerProperty(0);
+      return matchPercentage; 
+   }
+   
    public String getIngredientString() {
       String result = "";
       for (int i = 0; i < ingredients.size(); i++) {
@@ -68,5 +88,13 @@ public class Recipe{
       this.description = desc;
       this.imageDir = imgurl;
       this.ingredients = ingredients;
+   }
+   
+   public Recipe(String id, String name, String lack, Integer percentMatch)
+   {
+      setID(id);
+      setName(name);
+      setLack(lack);
+      setMatchPercentage(percentMatch);
    }
 }
