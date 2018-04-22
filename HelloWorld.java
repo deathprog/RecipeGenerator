@@ -36,6 +36,12 @@ import java.io.File;
 import java.util.List;
 import java.net.URL;
 import java.net.MalformedURLException;
+import javafx.scene.control.MenuItem;
+import javafx.application.Platform;
+import javafx.scene.control.MenuBar;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuItem;
+import javafx.scene.layout.VBox;
  
 public class HelloWorld extends Application {
 
@@ -57,6 +63,41 @@ public class HelloWorld extends Application {
       Scene homeScene = new Scene(homePage, 650, 400);
       Scene addScene = new Scene(addPage, 650, 400);
       Scene searchScene = new Scene(searchPage, 650, 400);
+      
+      
+         //Menu items
+      /*Node searchPageQuit = searchPage.lookup("#searchPage_quit");
+      Node addPageQuit = addPage.lookup("#addPage_quit");
+      Node searchPageAbout = searchPage.lookup("#searchPage_about");
+      Node addPageAbout = addPage.lookup("#addPage_about");
+      */
+      MenuBar searchPageMenuBar = new MenuBar();
+      Menu searchPageFileMenu = new Menu("File");
+      MenuItem searchPageQuitMenuItem = new MenuItem("Quit");
+      searchPageFileMenu.getItems().add(searchPageQuitMenuItem);
+      Menu searchPageAboutMenu = new Menu("About");
+      MenuItem searchPageAboutMenuItem = new MenuItem("About RecipeGenerator");
+      searchPageAboutMenu.getItems().add(searchPageAboutMenuItem);
+      searchPageMenuBar.getMenus().add(searchPageFileMenu);
+      searchPageMenuBar.getMenus().add(searchPageAboutMenu);
+      
+      MenuBar addPageMenuBar = new MenuBar();
+      Menu addPageFileMenu = new Menu("File");
+      MenuItem addPageQuitMenuItem = new MenuItem("Quit");
+      addPageFileMenu.getItems().add(addPageQuitMenuItem);
+      Menu addPageAboutMenu = new Menu("About");
+      MenuItem addPageAboutMenuItem = new MenuItem("About RecipeGenerator");
+      addPageAboutMenu.getItems().add(addPageAboutMenuItem);
+      addPageMenuBar.getMenus().add(addPageFileMenu);
+      addPageMenuBar.getMenus().add(addPageAboutMenu);
+      
+      //searchPageVBox.getChildren().add(menuBar);
+     // addPageVBox.getChildren().add(menuBar);
+      ((VBox) addScene.getRoot()).getChildren().add(0,addPageMenuBar);
+      ((VBox) searchScene.getRoot()).getChildren().add(0,searchPageMenuBar);
+      
+      
+      
    
       stage.setTitle("Recipe Generator");
       stage.setScene(searchScene);
@@ -94,7 +135,10 @@ public class HelloWorld extends Application {
       Button searchPageClearIngredientsButton = (Button)searchPage.lookup("#searchPage_clearIngredients_button");
       Label searchPageResultLabel = (Label)searchPage.lookup("#searchPage_result_label");
       
+      //VBox searchPageVBox = (VBox)searchPage.lookup("#searchPage_vbox");
+      //VBox addPageVBox = (VBox)addPage.lookup("#addPage_vbox");
       
+   
       
       User user = new User( );
       RecipeInformation recipeInfo = new RecipeInformation();
@@ -164,7 +208,7 @@ public class HelloWorld extends Application {
                   //System.out.println("# of ingredients you lack: "+recipeInfo.searched_table.getCell(r, 2));
                   if(recipeInfo.getIngredientNum(recipeInfo.searched_table.getCell(r, 0)) > Integer.parseInt(recipeInfo.searched_table.getCell(r, 2)))
                      recipes.add(new Recipe(recipeInfo.searched_table.getCell(r, 0), recipeInfo.searched_table.getCell(r, 1), recipeInfo.searched_table.getCell(r, 2), 
-                     100 - ((int)(Integer.parseInt(recipeInfo.searched_table.getCell(r, 2)) / 1.0 / recipeInfo.getIngredientNum(recipeInfo.searched_table.getCell(r, 0)) * 100))));
+                        100 - ((int)(Integer.parseInt(recipeInfo.searched_table.getCell(r, 2)) / 1.0 / recipeInfo.getIngredientNum(recipeInfo.searched_table.getCell(r, 0)) * 100))));
                }
                searchPageTableView.setItems(recipes);
                
@@ -270,13 +314,47 @@ public class HelloWorld extends Application {
             } 
          });
          
-         searchPageClearIngredientsButton.setOnAction(
+      searchPageClearIngredientsButton.setOnAction(
          new EventHandler<ActionEvent>() {
             @Override public void handle(ActionEvent e) {
                searchPageListView.getItems().clear();
                user.currentIngredient.clear( );
             } 
          });
-
+         
+         //Menu item events
+      searchPageQuitMenuItem.setOnAction(
+         new EventHandler<ActionEvent>() {
+            @Override public void handle(ActionEvent e) {
+               Platform.exit();
+            } 
+         });
+      searchPageAboutMenuItem.setOnAction(
+         new EventHandler<ActionEvent>() {
+            @Override public void handle(ActionEvent e) {
+               Alert alert = new Alert(AlertType.INFORMATION);
+               alert.setTitle("About RecipeGenerator");
+               alert.setHeaderText("About RecipeGenerator");
+               alert.setContentText("RecipeGenerator is a program developed by Abdullah Samad, Huajun Wang, Anish Kandumalla, and Jim Cheung for a CS321 project.");
+               alert.showAndWait();
+            } 
+         });
+      addPageQuitMenuItem.setOnAction(
+         new EventHandler<ActionEvent>() {
+            @Override public void handle(ActionEvent e) {
+               Platform.exit();
+            } 
+         });
+      addPageAboutMenuItem.setOnAction(
+         new EventHandler<ActionEvent>() {
+            @Override public void handle(ActionEvent e) {
+               Alert alert = new Alert(AlertType.INFORMATION);
+               alert.setTitle("About RecipeGenerator");
+               alert.setHeaderText("About RecipeGenerator");
+               alert.setContentText("RecipeGenerator is a program developed by Abdullah Samad, Huajun Wang, Anish Kandumalla, and Jim Cheung for a CS321 project.");
+               alert.showAndWait();
+            } 
+         });
+   
    }
 }
