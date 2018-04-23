@@ -27,11 +27,11 @@ public class RecipeInformation {
       for (int i = 0; i < recipe_ingredient.getTableSize(); i++) {
          int n_lack = this.compare_material(all_ingredient, recipe_ingredient.getCell(i, 2));
          //if (n_lack < 3) {
-         List<String> tuple = new ArrayList<String>();
-         tuple.add(recipe_ingredient.getCell(i, 0));
-         tuple.add(recipe_ingredient.getCell(i, 1));
-         tuple.add(Integer.toString(n_lack));
-         searched_table.insert(tuple);
+            List<String> tuple = new ArrayList<String>();
+            tuple.add(recipe_ingredient.getCell(i, 0));
+            tuple.add(recipe_ingredient.getCell(i, 1));
+            tuple.add(Integer.toString(n_lack));
+            searched_table.insert(tuple);
          //}
       }
    
@@ -190,37 +190,37 @@ public class RecipeInformation {
    
       File f = new File(fileDir);
       while (f.exists()) {
-         f.delete(); 
-         System.out.println("Recipe have been modified");
+        f.delete(); 
+        System.out.println("Recipe have been modified");
       }
       
       int count = 1;
       Boolean check = true;
       while (check) {
-         check = false;
-         for (int j = 0; j  < this.recipe_ingredient.getTableSize(); j++) {
-            if (Integer.toString(count).equals(this.recipe_ingredient.getCell(j, 0))) {
-               count++;
-               check = true;
-            }
-         }
+        check = false;
+        for (int j = 0; j  < this.recipe_ingredient.getTableSize(); j++) {
+          if (Integer.toString(count).equals(this.recipe_ingredient.getCell(j, 0))) {
+            count++;
+            check = true;
+          }
+        }
       }
       
       recipe.setID(Integer.toString(count));
       
       try {
-         f.createNewFile();
-         FileOutputStream out = new FileOutputStream(f);
-         String temp = "";
+        f.createNewFile();
+        FileOutputStream out = new FileOutputStream(f);
+        String temp = "";
         
-         temp += "ID\n";
-         temp += Integer.toString(count) + "\n";
-         temp += "Name\n";
-         temp += recipe.getName() + "\n";
-         temp += "Image directory\n";
-         temp += recipe.getImageDir() + "\n";
-         temp += "Description\n";
-         temp += recipe.getDescription() + "\n";
+        temp += "ID\n";
+        temp += Integer.toString(count) + "\n";
+        temp += "Name\n";
+        temp += recipe.getName() + "\n";
+        temp += "Image directory\n";
+        temp += recipe.getImageDir() + "\n";
+        temp += "Description\n";
+        temp += recipe.getDescription() + "\n";
       
          out.write(temp.getBytes());
          out.close();
@@ -244,57 +244,53 @@ public class RecipeInformation {
    
    // Remove a recipe
    public void removeRecipe(String ID) {
-      for (int i = 0; i < this.recipe_ingredient.getTableSize(); i++) {
-         if(ID.equals(this.recipe_ingredient.getCell(i, 0))) {
-            this.recipe_ingredient.remove(i);
-         }
-      }
+    for (int i = 0; i < this.recipe_ingredient.getTableSize(); i++) {
+     if(ID.equals(this.recipe_ingredient.getCell(i, 0))) {
+      this.recipe_ingredient.remove(i);
+     }
+    }
     
-      for (int i = 0; i < this.recipe_dir.getTableSize(); i++) {
-         if(ID.equals(this.recipe_dir.getCell(i, 0))){
-            this.recipe_dir.remove(i);
-         }
-      }
+    for (int i = 0; i < this.recipe_dir.getTableSize(); i++) {
+     if(ID.equals(this.recipe_dir.getCell(i, 0))){
+      this.recipe_dir.remove(i);
+     }
+    }
    }
    
    // Save two table
    public void save() {
-   
-      File f = new File(recipeInformationFile);
-      if (f.exists()) {
-         f.delete(); 
-         System.out.println("Recipe information saved.");
-      }
-   
-      String buffer = "";
-   
-      for (int i = 0; i < this.recipe_ingredient.getTableSize(); i++) {
-         String ID = this.recipe_ingredient.getCell(i, 0);
-         buffer += "info\n";
-         buffer += ID + "\n";
-         buffer += this.recipe_ingredient.getCell(i, 1) + "\n";
-         buffer += this.recipe_ingredient.getCell(i, 2) + "\n";
-         buffer += this.getDirByID(ID) + "\n";
-      }
-   
-      try {
-         f.createNewFile();
-         FileOutputStream out = new FileOutputStream(f);
-         out.write(buffer.getBytes());
-         out.close();
-      } 
-      catch (Exception e) {
-         System.out.println("Something wrong with RecipeInformation.save()");
-         return;
-      }
-   
-   }
+
+        File f = new File(recipeInformationFile);
+        if (f.exists()) {
+            f.delete(); 
+            System.out.println("Recipe information saved.");
+        }
+
+        String buffer = "";
+
+        for (int i = 0; i < this.recipe_ingredient.getTableSize(); i++) {
+            String ID = this.recipe_ingredient.getCell(i, 0);
+            buffer += "info\n";
+            buffer += ID + "\n";
+            buffer += this.recipe_ingredient.getCell(i, 1) + "\n";
+            buffer += this.recipe_ingredient.getCell(i, 2) + "\n";
+            buffer += this.getDirByID(ID) + "\n";
+        }
+
+        try {
+            f.createNewFile();
+            FileOutputStream out = new FileOutputStream(f);
+            out.write(buffer.getBytes());
+            out.close();
+        } catch (Exception e) {
+            System.out.println("Something wrong with RecipeInformation.save()");
+            return;
+        }
+
+    }
    
    // Generate Recipe
    public Recipe getRecipe(String ID) {
-    
-      String fileDir = getDirByID(ID);
-      Recipe recipe = new Recipe(ID, getCell(ID, recipe_ingredient, 1), getCell(ID, searched_table, 2)); // #lack is 0
     
     String fileDir = getDirByID(ID);
     Recipe recipe = new Recipe(ID, getCell(ID, recipe_ingredient, 1), getCell(ID, searched_table, 2)); // #lack is 0
@@ -305,36 +301,22 @@ public class RecipeInformation {
      return null;
     }
     
-      File f = new File(fileDir);
-      if(!f.exists()) {
-         System.out.println("Error in getRecipe(String ID)");
-         return null;
+    try {
+     Scanner sc = new Scanner(f);
+     while (sc.hasNextLine()) {
+      if (sc.nextLine().equals("Image directory")) {
+       recipe.setImageDir(sc.nextLine());
       }
-    
-      try {
-         Scanner sc = new Scanner(f);
-         while (sc.hasNextLine()) {
-            if (sc.nextLine().equals("Image directory")) {
-               recipe.setImageDir(sc.nextLine());
-            }
-            if (sc.nextLine().equals("Description")) {
-               String description = "";
-               while(sc.hasNextLine()) {
-                  description += sc.nextLine();
-               }
-               recipe.setDescription(description);
-            }
-         }
-         sc.close();
-      } 
-      catch (Exception e) {
-         System.out.println("Error in getRecipe(String ID) 2");
+      if (sc.nextLine().equals("Description")) {
+       String description = "";
+       while(sc.hasNextLine()) {
+        description += sc.nextLine();
+       }
+       recipe.setDescription(description);
       }
-    
-      return recipe;
      }
      
-     recipe.setIngredient(this.getIngredient(recipe.getId()));
+     recipe.setIngerdient(this.getIngredient(recipe.getId()));
      
      sc.close();
     } catch (Exception e) {
@@ -346,22 +328,22 @@ public class RecipeInformation {
    
    // Get row by ID
    private List<String> getRow (String ID, Table table) {
-      for (int i = 0; i < table.getTableSize(); i++) {
-         if (ID.equals(table.getCell(i, 0))) {
-            return table.getRow(i);
-         }
-      }
-      return null;
+    for (int i = 0; i < table.getTableSize(); i++) {
+     if (ID.equals(table.getCell(i, 0))) {
+      return table.getRow(i);
+     }
+    }
+    return null;
    }
    
    // Get cell by ID, column
    private String getCell (String ID, Table table, int column) {
-      for (int i = 0; i < table.getTableSize(); i++) {
-         if (ID.equals(table.getCell(i, 0))) {
-            return table.getCell(i, column);
-         }
-      }
-      return null;
+    for (int i = 0; i < table.getTableSize(); i++) {
+     if (ID.equals(table.getCell(i, 0))) {
+      return table.getCell(i, column);
+     }
+    }
+    return null;
    }
    
 }
