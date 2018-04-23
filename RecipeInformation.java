@@ -296,6 +296,15 @@ public class RecipeInformation {
       String fileDir = getDirByID(ID);
       Recipe recipe = new Recipe(ID, getCell(ID, recipe_ingredient, 1), getCell(ID, searched_table, 2)); // #lack is 0
     
+    String fileDir = getDirByID(ID);
+    Recipe recipe = new Recipe(ID, getCell(ID, recipe_ingredient, 1), getCell(ID, searched_table, 2)); // #lack is 0
+    
+    File f = new File(fileDir);
+    if(!f.exists()) {
+     System.out.println("Error in getRecipe(String ID)");
+     return null;
+    }
+    
       File f = new File(fileDir);
       if(!f.exists()) {
          System.out.println("Error in getRecipe(String ID)");
@@ -323,6 +332,16 @@ public class RecipeInformation {
       }
     
       return recipe;
+     }
+     
+     recipe.setIngredient(this.getIngredient(recipe.getId()));
+     
+     sc.close();
+    } catch (Exception e) {
+     System.out.println("Error in getRecipe(String ID) 2");
+    }
+    
+    return recipe;
    }
    
    // Get row by ID
