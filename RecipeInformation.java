@@ -13,8 +13,7 @@ public class RecipeInformation {
    // Fields for search
    public Table searched_table;
    
-   
-   // Methods
+    // Methods
    
    // Search by ingredient, the result will be stored in this.searched_table
    public void search(List<String> all_ingredient) {
@@ -316,6 +315,7 @@ public class RecipeInformation {
        recipe.setDescription(description);
       }
      }
+     sc.close();
     } catch (Exception e) {
      System.out.println("Error in getRecipe(String ID) 2");
     }

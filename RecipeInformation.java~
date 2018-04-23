@@ -292,55 +292,56 @@ public class RecipeInformation {
    
    // Generate Recipe
    public void getRecipe(String ID) {
-	   
-	   String fileDir = getDirByID(String ID)
-	   Recipe recipe = new Recipe(ID, getCell(ID, recipe_ingredient, 1), getCell(ID, searched_table, 2)); // #lack is 0
-	   
-	   File f = new File(fileDir);
-	   if(!f.exists()) {
-		   System.out.println("Error in getRecipe(String ID)");
-		   return;
-	   }
-	   
-	   try {
-		   Scanner sc = new Scanner(f);
-		   while (sc.hasNextLine()) {
-			   if (sc.nextLine().equals("Image directory")) {
-				   recipe.setImageDir(sc.nextLine());
-			   }
-			   if (sc.nextLine().equals("Description")) {
-				   String description = "";
-				   while(sc.hasNextLine()) {
-					   description += sc.nextLine();
-				   }
-				   recipe.setDescription(description);
-			   }
-		   }
-	   } catch (Execption e) {
-		   System.out.println("Error in getRecipe(String ID) 2");
-	   }
-	   
-	   return;
+    
+    String fileDir = getDirByID(ID);
+    Recipe recipe = new Recipe(ID, getCell(ID, recipe_ingredient, 1), getCell(ID, searched_table, 2)); // #lack is 0
+    
+    File f = new File(fileDir);
+    if(!f.exists()) {
+     System.out.println("Error in getRecipe(String ID)");
+     return;
+    }
+    
+    try {
+     Scanner sc = new Scanner(f);
+     while (sc.hasNextLine()) {
+      if (sc.nextLine().equals("Image directory")) {
+       recipe.setImageDir(sc.nextLine());
+      }
+      if (sc.nextLine().equals("Description")) {
+       String description = "";
+       while(sc.hasNextLine()) {
+        description += sc.nextLine();
+       }
+       recipe.setDescription(description);
+      }
+     }
+     sc.close();
+    } catch (Exception e) {
+     System.out.println("Error in getRecipe(String ID) 2");
+    }
+    
+    return;
    }
    
    // Get row by ID
    private List<String> getRow (String ID, Table table) {
-	   for (int i = 0; i < table.getTableSize(); i++) {
-		   if (ID.equals(table.getCell(i, 0))) {
-			   return table.getRow(i);
-		   }
-	   }
-	   return null;
+    for (int i = 0; i < table.getTableSize(); i++) {
+     if (ID.equals(table.getCell(i, 0))) {
+      return table.getRow(i);
+     }
+    }
+    return null;
    }
    
    // Get cell by ID, column
    private String getCell (String ID, Table table, int column) {
-	   for (int i = 0; i < table.getTableSize(); i++) {
-		   if (ID.equals(table.getCell(i, 0))) {
-			   return table.getCell(i, column);
-		   }
-	   }
-	   return null;
+    for (int i = 0; i < table.getTableSize(); i++) {
+     if (ID.equals(table.getCell(i, 0))) {
+      return table.getCell(i, column);
+     }
+    }
+    return null;
    }
    
 }
