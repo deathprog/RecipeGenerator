@@ -49,6 +49,7 @@ public class HelloWorld extends Application {
 //Stores the path of the image chosen when adding a new recipe
    String imagePath = "";
    String viewingID = "";
+   Scene previousSceneFromFavoritesPage = null;
 
    public static void main(String[] args) {
       launch(args);
@@ -62,11 +63,13 @@ public class HelloWorld extends Application {
       Parent addPage = FXMLLoader.load(getClass().getResource("add_screen.fxml"));
       Parent searchPage = FXMLLoader.load(getClass().getResource("user.fxml"));
       Parent viewPage = FXMLLoader.load(getClass().getResource("view_screen.fxml"));
+      Parent favoritesPage = FXMLLoader.load(getClass().getResource("favorites_screen.fxml"));
       
       Scene homeScene = new Scene(homePage, 650, 400);
       Scene addScene = new Scene(addPage, 650, 400);
       Scene searchScene = new Scene(searchPage, 650, 400);
       Scene viewScene = new Scene(viewPage, 650, 400);
+      Scene favoritesScene = new Scene(favoritesPage, 650, 400);
       
       
          //Menu items
@@ -78,7 +81,9 @@ public class HelloWorld extends Application {
       MenuBar searchPageMenuBar = new MenuBar();
       Menu searchPageFileMenu = new Menu("File");
       MenuItem searchPageQuitMenuItem = new MenuItem("Quit");
+      MenuItem searchPageViewFavoritesMenuItem = new MenuItem("View Favorites");
       searchPageFileMenu.getItems().add(searchPageQuitMenuItem);
+      searchPageFileMenu.getItems().add(searchPageViewFavoritesMenuItem);
       Menu searchPageAboutMenu = new Menu("About");
       MenuItem searchPageAboutMenuItem = new MenuItem("About RecipeGenerator");
       searchPageAboutMenu.getItems().add(searchPageAboutMenuItem);
@@ -88,7 +93,9 @@ public class HelloWorld extends Application {
       MenuBar addPageMenuBar = new MenuBar();
       Menu addPageFileMenu = new Menu("File");
       MenuItem addPageQuitMenuItem = new MenuItem("Quit");
+      MenuItem addPageViewFavoritesMenuItem = new MenuItem("View Favorites");
       addPageFileMenu.getItems().add(addPageQuitMenuItem);
+      addPageFileMenu.getItems().add(addPageViewFavoritesMenuItem);
       Menu addPageAboutMenu = new Menu("About");
       MenuItem addPageAboutMenuItem = new MenuItem("About RecipeGenerator");
       addPageAboutMenu.getItems().add(addPageAboutMenuItem);
@@ -98,18 +105,31 @@ public class HelloWorld extends Application {
       MenuBar viewPageMenuBar = new MenuBar();
       Menu viewPageFileMenu = new Menu("File");
       MenuItem viewPageQuitMenuItem = new MenuItem("Quit");
+      MenuItem viewPageViewFavoritesMenuItem = new MenuItem("View Favorites");
       viewPageFileMenu.getItems().add(viewPageQuitMenuItem);
+      viewPageFileMenu.getItems().add(viewPageViewFavoritesMenuItem);
       Menu viewPageAboutMenu = new Menu("About");
       MenuItem viewPageAboutMenuItem = new MenuItem("About RecipeGenerator");
       viewPageAboutMenu.getItems().add(viewPageAboutMenuItem);
       viewPageMenuBar.getMenus().add(viewPageFileMenu);
       viewPageMenuBar.getMenus().add(viewPageAboutMenu);
       
+      MenuBar favoritesPageMenuBar = new MenuBar();
+      Menu favoritesPageFileMenu = new Menu("File");
+      MenuItem favoritesPageQuitMenuItem = new MenuItem("Quit");
+      favoritesPageFileMenu.getItems().add(favoritesPageQuitMenuItem);
+      Menu favoritesPageAboutMenu = new Menu("About");
+      MenuItem favoritesPageAboutMenuItem = new MenuItem("About RecipeGenerator");
+      favoritesPageAboutMenu.getItems().add(favoritesPageAboutMenuItem);
+      favoritesPageMenuBar.getMenus().add(favoritesPageFileMenu);
+      favoritesPageMenuBar.getMenus().add(favoritesPageAboutMenu);
+      
       //searchPageVBox.getChildren().add(menuBar);
      // addPageVBox.getChildren().add(menuBar);
       ((VBox) addScene.getRoot()).getChildren().add(0,addPageMenuBar);
       ((VBox) searchScene.getRoot()).getChildren().add(0,searchPageMenuBar);
       ((VBox) viewScene.getRoot()).getChildren().add(0,viewPageMenuBar);
+      ((VBox) favoritesScene.getRoot()).getChildren().add(0,favoritesPageMenuBar);
       
       
       
@@ -155,6 +175,10 @@ public class HelloWorld extends Application {
       Button viewPageBackButton = (Button)viewPage.lookup("#viewPage_back_button");
       ImageView viewPageFavorite = (ImageView)viewPage.lookup("#viewPage_favorite");
       Label viewPageRecipeLabel = (Label)viewPage.lookup("#viewPage_recipe_label");
+      
+      TableView favoritesPageTableView = (TableView)favoritesPage.lookup("#favoritesPage_tableView");
+      Button favoritesPageBackButton = (Button)favoritesPage.lookup("#favoritesPage_back_button");
+      
       
    
       
@@ -357,6 +381,29 @@ public class HelloWorld extends Application {
                alert.showAndWait();
             } 
          });
+      searchPageViewFavoritesMenuItem.setOnAction(
+         new EventHandler<ActionEvent>() {
+            @Override public void handle(ActionEvent e) {
+               ObservableList<Recipe> recipes = FXCollections.observableArrayList();
+               for (int r = 0; r < user.getFavorite().size(); r++) {
+                  recipes.add(recipeInfo.getRecipe(user.getFavorite().get(r)));
+               }
+               favoritesPageTableView.setItems(recipes);
+               
+               TableColumn<Recipe,String> idCol = new TableColumn<Recipe,String>("ID");
+               idCol.setCellValueFactory(new PropertyValueFactory("id"));
+               TableColumn<Recipe,String> nameCol = new TableColumn<Recipe,String>("Name");
+               nameCol.setCellValueFactory(new PropertyValueFactory("name"));
+               TableColumn<Recipe,Integer> lackCol = new TableColumn<Recipe,Integer>("% Match");
+               lackCol.setCellValueFactory(new PropertyValueFactory("matchPercentage"));   
+                           
+               favoritesPageTableView.getColumns().setAll(idCol, nameCol, lackCol);
+               
+               previousSceneFromFavoritesPage = searchScene;
+            
+               stage.setScene(favoritesScene);
+            } 
+         });
       addPageQuitMenuItem.setOnAction(
          new EventHandler<ActionEvent>() {
             @Override public void handle(ActionEvent e) {
@@ -371,6 +418,30 @@ public class HelloWorld extends Application {
                alert.setHeaderText("About RecipeGenerator");
                alert.setContentText("RecipeGenerator is a program developed by Abdullah Samad, Huajun Wang, Anish Kandumalla, and Jim Cheung for a CS321 project.");
                alert.showAndWait();
+            } 
+         });
+      addPageViewFavoritesMenuItem.setOnAction(
+         new EventHandler<ActionEvent>() {
+            @Override public void handle(ActionEvent e) {
+               ObservableList<Recipe> recipes = FXCollections.observableArrayList();
+               for (int r = 0; r < user.getFavorite().size(); r++) {
+                  recipes.add(recipeInfo.getRecipe(user.getFavorite().get(r)));
+               }
+               favoritesPageTableView.setItems(recipes);
+               
+               TableColumn<Recipe,String> idCol = new TableColumn<Recipe,String>("ID");
+               idCol.setCellValueFactory(new PropertyValueFactory("id"));
+               TableColumn<Recipe,String> nameCol = new TableColumn<Recipe,String>("Name");
+               nameCol.setCellValueFactory(new PropertyValueFactory("name"));
+               TableColumn<Recipe,Integer> lackCol = new TableColumn<Recipe,Integer>("% Match");
+               lackCol.setCellValueFactory(new PropertyValueFactory("matchPercentage"));   
+                           
+               favoritesPageTableView.getColumns().setAll(idCol, nameCol, lackCol);
+               
+               previousSceneFromFavoritesPage = addScene;
+            
+               stage.setScene(favoritesScene);
+            
             } 
          });
       viewPageQuitMenuItem.setOnAction(
@@ -389,6 +460,47 @@ public class HelloWorld extends Application {
                alert.showAndWait();
             } 
          });
+      viewPageViewFavoritesMenuItem.setOnAction(
+         new EventHandler<ActionEvent>() {
+            @Override public void handle(ActionEvent e) {
+               ObservableList<Recipe> recipes = FXCollections.observableArrayList();
+               for (int r = 0; r < user.getFavorite().size(); r++) {
+                  recipes.add(recipeInfo.getRecipe(user.getFavorite().get(r)));
+               }
+               favoritesPageTableView.setItems(recipes);
+               
+               TableColumn<Recipe,String> idCol = new TableColumn<Recipe,String>("ID");
+               idCol.setCellValueFactory(new PropertyValueFactory("id"));
+               TableColumn<Recipe,String> nameCol = new TableColumn<Recipe,String>("Name");
+               nameCol.setCellValueFactory(new PropertyValueFactory("name"));
+               TableColumn<Recipe,Integer> lackCol = new TableColumn<Recipe,Integer>("% Match");
+               lackCol.setCellValueFactory(new PropertyValueFactory("matchPercentage"));   
+                           
+               favoritesPageTableView.getColumns().setAll(idCol, nameCol, lackCol);
+            
+               previousSceneFromFavoritesPage = viewScene;
+            
+               stage.setScene(favoritesScene);
+            
+            } 
+         });
+      favoritesPageQuitMenuItem.setOnAction(
+         new EventHandler<ActionEvent>() {
+            @Override public void handle(ActionEvent e) {
+               Platform.exit();
+            } 
+         });
+      favoritesPageAboutMenuItem.setOnAction(
+         new EventHandler<ActionEvent>() {
+            @Override public void handle(ActionEvent e) {
+               Alert alert = new Alert(AlertType.INFORMATION);
+               alert.setTitle("About RecipeGenerator");
+               alert.setHeaderText("About RecipeGenerator");
+               alert.setContentText("RecipeGenerator is a program developed by Abdullah Samad, Huajun Wang, Anish Kandumalla, and Jim Cheung for a CS321 project.");
+               alert.showAndWait();
+            } 
+         });
+   
          
          //show viewRecipe page when you click on a recipe in search results
       searchPageTableView.setOnMousePressed(
@@ -445,13 +557,47 @@ public class HelloWorld extends Application {
                }
             }
          });
+         
+      favoritesPageTableView.setOnMousePressed(
+         new EventHandler<MouseEvent>() {
+            @Override public void handle(MouseEvent e) {
+               if (e.isPrimaryButtonDown() && e.getClickCount() == 2) {
+                  Recipe tempSelectedRecipe = (Recipe)searchPageTableView.getSelectionModel().getSelectedItem();
+                  Recipe selectedRecipe = recipeInfo.getRecipe(tempSelectedRecipe.getId());
+                  
+                  //prep the view page
+                  viewPageRecipeLabel.setText(selectedRecipe.getName());
+                  for(String s:selectedRecipe.getIngredients())
+                  {
+                     viewPageIngredients.getItems().add(s);
+                  }
+                  viewPageDescription.setText(selectedRecipe.getDescription());
+                  if(user.isFavorite(selectedRecipe.getId()))
+                  {
+                     viewPageFavorite.setImage(new Image("gold_star.png", 54, 51, false, true));
+                  }
+                  else
+                  {
+                     viewPageFavorite.setImage(new Image("star.png", 54, 51, false, true));
+                  }
+                  
+                  viewingID = selectedRecipe.getId();
+                   
+                  stage.setScene(viewScene);                 
+               }
+            }
+         });
+      favoritesPageBackButton.setOnAction(
+         new EventHandler<ActionEvent>() {
+            @Override public void handle(ActionEvent e) {
+               stage.setScene(previousSceneFromFavoritesPage);
+            } 
+         });
+   
    }
 }
 
 /*
-ListView viewPageIngredients = (ListView)viewPage.lookup("#viewPage_ingredients");
-      TextArea viewPageDescription = (TextArea)viewPage.lookup("#viewPage_description");
-      Button viewPageBackButton = (Button)viewPage.lookup("#viewPage_back_button");
-      ImageView viewPageFavorite = (ImageView)viewPage.lookup("#viewPage_favorite");
-      Label viewPageRecipeLabel = (Label)viewPage.lookup("#viewPage_recipe_label");
+TableView favoritesPageTableView = (TableView)favoritesPage.lookup("#favoritesPage_tableView");
+      Button favoritesPageBackButton = (Button)favoritesPage.lookup("#favoritesPage_back_button");
       */
