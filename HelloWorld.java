@@ -42,11 +42,13 @@ import javafx.scene.control.MenuBar;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.layout.VBox;
+import javafx.scene.input.MouseEvent;
  
 public class HelloWorld extends Application {
 
 //Stores the path of the image chosen when adding a new recipe
    String imagePath = "";
+   String viewingID = "";
 
    public static void main(String[] args) {
       launch(args);
@@ -59,10 +61,12 @@ public class HelloWorld extends Application {
       Parent homePage = FXMLLoader.load(getClass().getResource("gui.fxml"));
       Parent addPage = FXMLLoader.load(getClass().getResource("add_screen.fxml"));
       Parent searchPage = FXMLLoader.load(getClass().getResource("user.fxml"));
+      Parent viewPage = FXMLLoader.load(getClass().getResource("view_screen.fxml"));
       
       Scene homeScene = new Scene(homePage, 650, 400);
       Scene addScene = new Scene(addPage, 650, 400);
       Scene searchScene = new Scene(searchPage, 650, 400);
+      Scene viewScene = new Scene(viewPage, 650, 400);
       
       
          //Menu items
@@ -91,10 +95,21 @@ public class HelloWorld extends Application {
       addPageMenuBar.getMenus().add(addPageFileMenu);
       addPageMenuBar.getMenus().add(addPageAboutMenu);
       
+      MenuBar viewPageMenuBar = new MenuBar();
+      Menu viewPageFileMenu = new Menu("File");
+      MenuItem viewPageQuitMenuItem = new MenuItem("Quit");
+      viewPageFileMenu.getItems().add(viewPageQuitMenuItem);
+      Menu viewPageAboutMenu = new Menu("About");
+      MenuItem viewPageAboutMenuItem = new MenuItem("About RecipeGenerator");
+      viewPageAboutMenu.getItems().add(viewPageAboutMenuItem);
+      viewPageMenuBar.getMenus().add(viewPageFileMenu);
+      viewPageMenuBar.getMenus().add(viewPageAboutMenu);
+      
       //searchPageVBox.getChildren().add(menuBar);
      // addPageVBox.getChildren().add(menuBar);
       ((VBox) addScene.getRoot()).getChildren().add(0,addPageMenuBar);
       ((VBox) searchScene.getRoot()).getChildren().add(0,searchPageMenuBar);
+      ((VBox) viewScene.getRoot()).getChildren().add(0,viewPageMenuBar);
       
       
       
@@ -135,8 +150,11 @@ public class HelloWorld extends Application {
       Button searchPageClearIngredientsButton = (Button)searchPage.lookup("#searchPage_clearIngredients_button");
       Label searchPageResultLabel = (Label)searchPage.lookup("#searchPage_result_label");
       
-      //VBox searchPageVBox = (VBox)searchPage.lookup("#searchPage_vbox");
-      //VBox addPageVBox = (VBox)addPage.lookup("#addPage_vbox");
+      ListView viewPageIngredients = (ListView)viewPage.lookup("#viewPage_ingredients");
+      TextArea viewPageDescription = (TextArea)viewPage.lookup("#viewPage_description");
+      Button viewPageBackButton = (Button)viewPage.lookup("#viewPage_back_button");
+      ImageView viewPageFavorite = (ImageView)viewPage.lookup("#viewPage_favorite");
+      Label viewPageRecipeLabel = (Label)viewPage.lookup("#viewPage_recipe_label");
       
    
       
@@ -355,6 +373,85 @@ public class HelloWorld extends Application {
                alert.showAndWait();
             } 
          });
-   
+      viewPageQuitMenuItem.setOnAction(
+         new EventHandler<ActionEvent>() {
+            @Override public void handle(ActionEvent e) {
+               Platform.exit();
+            } 
+         });
+      viewPageAboutMenuItem.setOnAction(
+         new EventHandler<ActionEvent>() {
+            @Override public void handle(ActionEvent e) {
+               Alert alert = new Alert(AlertType.INFORMATION);
+               alert.setTitle("About RecipeGenerator");
+               alert.setHeaderText("About RecipeGenerator");
+               alert.setContentText("RecipeGenerator is a program developed by Abdullah Samad, Huajun Wang, Anish Kandumalla, and Jim Cheung for a CS321 project.");
+               alert.showAndWait();
+            } 
+         });
+         
+         //show viewRecipe page when you click on a recipe in search results
+      searchPageTableView.setOnMousePressed(
+         new EventHandler<MouseEvent>() {
+            @Override public void handle(MouseEvent e) {
+               if (e.isPrimaryButtonDown() && e.getClickCount() == 2) {
+                  Recipe tempSelectedRecipe = (Recipe)searchPageTableView.getSelectionModel().getSelectedItem();
+                  Recipe selectedRecipe = recipeInfo.getRecipe(tempSelectedRecipe.getId());
+                  
+                  //prep the view page
+                  viewPageRecipeLabel.setText(selectedRecipe.getName());
+                  for(String s:selectedRecipe.getIngredients())
+                  {
+                     viewPageIngredients.getItems().add(s);
+                  }
+                  viewPageDescription.setText(selectedRecipe.getDescription());
+                  if(user.isFavorite(selectedRecipe.getId()))
+                  {
+                     viewPageFavorite.setImage(new Image("gold_star.png", 54, 51, false, true));
+                  }
+                  else
+                  {
+                     viewPageFavorite.setImage(new Image("star.png", 54, 51, false, true));
+                  }
+                  
+                  viewingID = selectedRecipe.getId();
+                   
+                  stage.setScene(viewScene);                 
+               }
+            }
+         });
+         
+      viewPageBackButton.setOnAction(
+         new EventHandler<ActionEvent>() {
+            @Override public void handle(ActionEvent e) {
+               stage.setScene(searchScene);
+            } 
+         });
+      
+      viewPageFavorite.setOnMousePressed(
+         new EventHandler<MouseEvent>() {
+            @Override public void handle(MouseEvent e) {
+               if (e.isPrimaryButtonDown() && e.getClickCount() == 1) {
+                  if(user.isFavorite(viewingID))
+                  {
+                     user.removeFavorite(viewingID);
+                     viewPageFavorite.setImage(new Image("star.png", 54, 51, false, true));
+                  }
+                  else
+                  {
+                     user.addFavorite(viewingID);
+                     viewPageFavorite.setImage(new Image("gold_star.png", 54, 51, false, true));
+                  }    
+               }
+            }
+         });
    }
 }
+
+/*
+ListView viewPageIngredients = (ListView)viewPage.lookup("#viewPage_ingredients");
+      TextArea viewPageDescription = (TextArea)viewPage.lookup("#viewPage_description");
+      Button viewPageBackButton = (Button)viewPage.lookup("#viewPage_back_button");
+      ImageView viewPageFavorite = (ImageView)viewPage.lookup("#viewPage_favorite");
+      Label viewPageRecipeLabel = (Label)viewPage.lookup("#viewPage_recipe_label");
+      */

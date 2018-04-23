@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox id="addPage_vbox" prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
+  <children>
+    <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
+      <children>
+            <Button id="viewPage_back_button" layoutX="309.0" layoutY="339.0" mnemonicParsing="false" text="Back" />
+            <ImageView id="addPage_imageView" fitHeight="110.0" fitWidth="112.0" layoutX="64.0" layoutY="34.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@plate.png" />
+               </image>
+            </ImageView>
+            <TextArea id="viewPage_description" editable="false" layoutX="186.0" layoutY="104.0" prefHeight="194.0" prefWidth="383.0" promptText="Enter a description of your meal" />
+            <ListView id="viewPage_ingredients" layoutX="63.0" layoutY="171.0" prefHeight="126.0" prefWidth="110.0" />
+            <Label layoutX="89.0" layoutY="154.0" text="Ingredients" />
+            <Label id="viewPage_recipe_label" layoutX="186.0" layoutY="48.0" text="Recipe">
+               <font>
+                  <Font size="23.0" />
+               </font>
+            </Label>
+            <ImageView id="viewPage_favorite" fitHeight="126.0" fitWidth="54.0" layoutX="557.0" layoutY="39.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@star.png" />
+               </image>
+            </ImageView>
+      </children>
+    </AnchorPane>
+  </children>
+</VBox>

@@ -67,6 +67,10 @@ public class Recipe{
       }
       return result;
    }
+   
+   public List<String> getIngredients(){
+      return ingredients;
+   }
      
    public String getDescription() {
       return this.description;
