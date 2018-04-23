@@ -19,7 +19,7 @@ public class Recipe{
    private String imageDir;
    
    public void setID(String value) { IDProperty().set(value); }
-   public String getID() { 
+   public String getId() { 
       return IDProperty().get(); }
    public StringProperty IDProperty() { 
       if (id == null) id = new SimpleStringProperty(this, "id");
