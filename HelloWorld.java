@@ -50,6 +50,7 @@ public class HelloWorld extends Application {
    String imagePath = "";
    String viewingID = "";
    Scene previousSceneFromFavoritesPage = null;
+   Scene previousSceneFromViewPage = null;
 
    public static void main(String[] args) {
       launch(args);
@@ -105,9 +106,7 @@ public class HelloWorld extends Application {
       MenuBar viewPageMenuBar = new MenuBar();
       Menu viewPageFileMenu = new Menu("File");
       MenuItem viewPageQuitMenuItem = new MenuItem("Quit");
-      MenuItem viewPageViewFavoritesMenuItem = new MenuItem("View Favorites");
       viewPageFileMenu.getItems().add(viewPageQuitMenuItem);
-      viewPageFileMenu.getItems().add(viewPageViewFavoritesMenuItem);
       Menu viewPageAboutMenu = new Menu("About");
       MenuItem viewPageAboutMenuItem = new MenuItem("About RecipeGenerator");
       viewPageAboutMenu.getItems().add(viewPageAboutMenuItem);
@@ -460,7 +459,7 @@ public class HelloWorld extends Application {
                alert.showAndWait();
             } 
          });
-      viewPageViewFavoritesMenuItem.setOnAction(
+      /*viewPageViewFavoritesMenuItem.setOnAction(
          new EventHandler<ActionEvent>() {
             @Override public void handle(ActionEvent e) {
                ObservableList<Recipe> recipes = FXCollections.observableArrayList();
@@ -483,7 +482,7 @@ public class HelloWorld extends Application {
                stage.setScene(favoritesScene);
             
             } 
-         });
+         });*/
       favoritesPageQuitMenuItem.setOnAction(
          new EventHandler<ActionEvent>() {
             @Override public void handle(ActionEvent e) {
@@ -511,6 +510,7 @@ public class HelloWorld extends Application {
                   Recipe selectedRecipe = recipeInfo.getRecipe(tempSelectedRecipe.getId());
                   
                   //prep the view page
+                  viewPageIngredients.getItems().clear();
                   viewPageRecipeLabel.setText(selectedRecipe.getName());
                   for(String s:selectedRecipe.getIngredients())
                   {
@@ -527,6 +527,8 @@ public class HelloWorld extends Application {
                   }
                   
                   viewingID = selectedRecipe.getId();
+                  
+                  previousSceneFromViewPage = searchScene;
                    
                   stage.setScene(viewScene);                 
                }
@@ -536,7 +538,7 @@ public class HelloWorld extends Application {
       viewPageBackButton.setOnAction(
          new EventHandler<ActionEvent>() {
             @Override public void handle(ActionEvent e) {
-               stage.setScene(searchScene);
+               stage.setScene(previousSceneFromViewPage);
             } 
          });
       
@@ -566,6 +568,7 @@ public class HelloWorld extends Application {
                   Recipe selectedRecipe = recipeInfo.getRecipe(tempSelectedRecipe.getId());
                   
                   //prep the view page
+                  viewPageIngredients.getItems().clear();
                   viewPageRecipeLabel.setText(selectedRecipe.getName());
                   for(String s:selectedRecipe.getIngredients())
                   {
@@ -582,6 +585,8 @@ public class HelloWorld extends Application {
                   }
                   
                   viewingID = selectedRecipe.getId();
+                  
+                  previousSceneFromViewPage = favoritesScene;
                    
                   stage.setScene(viewScene);                 
                }
