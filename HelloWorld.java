@@ -545,11 +545,27 @@ public class HelloWorld extends Application {
       viewPageFavorite.setOnMousePressed(
          new EventHandler<MouseEvent>() {
             @Override public void handle(MouseEvent e) {
-               if (e.isPrimaryButtonDown() && e.getClickCount() == 2) {
+               if (e.isPrimaryButtonDown() && e.getClickCount() == 1) {
                   if(user.isFavorite(viewingID))
                   {
                      user.removeFavorite(viewingID);
                      viewPageFavorite.setImage(new Image("star.png", 54, 51, false, true));
+                     
+                     //Remove recipe from favorites page
+                     ObservableList<Recipe> recipes = FXCollections.observableArrayList();
+                     for (int r = 0; r < user.getFavorite().size(); r++) {
+                        recipes.add(recipeInfo.getRecipe(user.getFavorite().get(r)));
+                     }
+                     favoritesPageTableView.setItems(recipes);
+                  
+                     TableColumn<Recipe,String> idCol = new TableColumn<Recipe,String>("ID");
+                     idCol.setCellValueFactory(new PropertyValueFactory("id"));
+                     TableColumn<Recipe,String> nameCol = new TableColumn<Recipe,String>("Name");
+                     nameCol.setCellValueFactory(new PropertyValueFactory("name"));
+                     TableColumn<Recipe,Integer> lackCol = new TableColumn<Recipe,Integer>("% Match");
+                     lackCol.setCellValueFactory(new PropertyValueFactory("matchPercentage"));   
+                           
+                     favoritesPageTableView.getColumns().setAll(idCol, nameCol, lackCol);
                   }
                   else
                   {
