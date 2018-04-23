@@ -3,6 +3,8 @@ import javafx.beans.property.SimpleStringProperty;
 import java.util.ArrayList;
 import javafx.scene.image.ImageView;
 import java.util.List;
+import java.util.Scanner;
+
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 
@@ -105,4 +107,12 @@ public class Recipe{
       setLack(lack);
       setMatchPercentage(percentMatch);
    }
+
+   public void setIngerdient(String ingredient) {
+	   Scanner sc = new Scanner(ingredient);
+	   while (sc.hasNext()) {
+		   this.ingredients.add(sc.next());
+	   }
+   }
+   
 }

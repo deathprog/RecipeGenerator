@@ -290,7 +290,7 @@ public class RecipeInformation {
     }
    
    // Generate Recipe
-   public void getRecipe(String ID) {
+   public Recipe getRecipe(String ID) {
     
     String fileDir = getDirByID(ID);
     Recipe recipe = new Recipe(ID, getCell(ID, recipe_ingredient, 1), getCell(ID, searched_table, 2)); // #lack is 0
@@ -298,7 +298,7 @@ public class RecipeInformation {
     File f = new File(fileDir);
     if(!f.exists()) {
      System.out.println("Error in getRecipe(String ID)");
-     return;
+     return null;
     }
     
     try {
@@ -315,12 +315,15 @@ public class RecipeInformation {
        recipe.setDescription(description);
       }
      }
+     
+     recipe.setIngerdient(this.getIngredient(recipe.getId()));
+     
      sc.close();
     } catch (Exception e) {
      System.out.println("Error in getRecipe(String ID) 2");
     }
     
-    return;
+    return recipe;
    }
    
    // Get row by ID
