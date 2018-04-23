@@ -185,7 +185,7 @@ public class RecipeInformation {
    public void addRecipe(Recipe recipe){
    
         // Write file
-      String fileName = recipe.getID()+recipe.getName();
+      String fileName = recipe.getId()+recipe.getName();
       String fileDir = "dat/" + fileName + ".txt"; // dat/fileIDfileName.txt
    
       File f = new File(fileDir);
@@ -237,7 +237,7 @@ public class RecipeInformation {
       this.recipe_ingredient.insert(tuple);
    
       tuple = new ArrayList<String>();
-      tuple.add(recipe.getID());
+      tuple.add(recipe.getId());
       tuple.add(fileDir);
       this.recipe_dir.insert(tuple);
    }
