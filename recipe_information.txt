@@ -1,10 +1,30 @@
 info
 1
-Fride Chicken
-chicken 
-dat/1Fride Chicken.txt
+Oven Scrambled Eggs
+butter eggs salt milk 
+dat/1Oven Scrambled Eggs.txt
 info
 2
-food2
-f 
-dat/2food2.txt
+Rice Pilaf
+butter olive oil onions rice chicken stock salt cayenne pepper 
+dat/2Rice Pilaf.txt
+info
+3
+Oreo Milkshake
+ice cream milk oreos 
+dat/3Oreo Milkshake.txt
+info
+4
+Pancakes
+flour milk eggs vegetable oil 
+dat/4Pancakes.txt
+info
+5
+Pasta Salad
+pasta salad seasoning salad dressing tomatoes green bell pepper red bell pepper yellow bell pepper black olives 
+dat/5Pasta Salad.txt
+info
+6
+Cream of Mushroom Soup
+mushrooms chicken broth onion thyme butter flour salt black pepper sherry 
+dat/6Cream of Mushroom Soup.txt
