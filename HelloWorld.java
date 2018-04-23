@@ -545,7 +545,7 @@ public class HelloWorld extends Application {
       viewPageFavorite.setOnMousePressed(
          new EventHandler<MouseEvent>() {
             @Override public void handle(MouseEvent e) {
-               if (e.isPrimaryButtonDown() && e.getClickCount() == 1) {
+               if (e.isPrimaryButtonDown() && e.getClickCount() == 2) {
                   if(user.isFavorite(viewingID))
                   {
                      user.removeFavorite(viewingID);
