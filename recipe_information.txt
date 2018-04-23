@@ -3,3 +3,8 @@ info
 Fride Chicken
 chicken 
 dat/1Fride Chicken.txt
+info
+2
+food2
+f 
+dat/2food2.txt

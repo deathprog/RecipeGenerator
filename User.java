@@ -29,4 +29,12 @@ public List<String> favorite;
    return this.favorite;
  }
  
+ public boolean isFavorite (String ID) {
+   return this.favorite.contains(ID);
+ }
+ 
+ public boolean isFavourite (Recipe recipe) {
+   return isFavorite (recipe.getId());
+ }
+ 
 }
