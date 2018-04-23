@@ -386,6 +386,7 @@ public class HelloWorld extends Application {
                ObservableList<Recipe> recipes = FXCollections.observableArrayList();
                for (int r = 0; r < user.getFavorite().size(); r++) {
                   recipes.add(recipeInfo.getRecipe(user.getFavorite().get(r)));
+                  recipes.get(r).setMatchPercentage( 100 - ((int)(Integer.parseInt(recipeInfo.searched_table.getCell(r, 2)) / 1.0 / recipeInfo.getIngredientNum(recipeInfo.searched_table.getCell(r, 0)) * 100)) );
                }
                favoritesPageTableView.setItems(recipes);
                
