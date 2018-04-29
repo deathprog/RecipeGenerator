@@ -1,0 +1,114 @@
+Functional Requirement testing with UI:
+	1 - User input of ingredients
+		Description: The first priority is to create functionality for the user to 
+					 input ingredients into the search menu for recipes. 
+		
+		Test Case 1: Add multiple ingredients
+			Expected Interaction: In the home page interface, the user should be able to 
+					    		  enter multiple typed out ingredients into the search menu. The 
+					    	  	  search menu then displays all the ingredients the user enters.
+			Conditions/inputs: enter multiple new user input ingredients before the search begins
+			Outcome(Pass/fail): Pass, the user can inputs ingredient by clicking "add" to add and display 
+			       				the ingredient to the search list and continue to add more ingredients.
+	
+		Test Case 2: Clear search ingredients list
+			Expected Interaction: In the search menu, the user can refresh the search list by clicking 
+			    				  "clear ingredients" to remove all ingredients from the search list 
+								  for new search.
+			Conditions/inputs: multiple ingredients already in the search menu list
+			Outcome(Pass/fail): Pass, the "clear ingredients" clears the search ingredient list
+	
+	2 - Search engine 
+		Description: The second priority is to search for recipes based on percent matched between
+					 recipes required ingredients to user input ingredients list.
+		
+		Test Case 1: Output plausible recipes
+			Expected Interaction: Based on the user ingredients list, the result menu should displays
+								  recipes and the percentage matched for each recipe that has over zero
+								  percent match.
+			Conditions/inputs: ingredients and recipes already entered and stored. inputs: "chicken", "rice"
+			Outcome(Pass/fail): Pass, the recipe result list displays all the possible recipes that have 
+								more than zero percentage match from the collection already existing recipes.
+		
+		Test Case 2: Correct match percentage
+			Expected Interaction: Each ingredient is weighted the same and the match percentage should be number of same
+								  ingredients in search list over the total number required ingredients for a recipe.
+			Conditions/inputs: The recipe collection was set to 10 recipes and check all individual auto 
+							   generated match percent compared to match percents derived by hand.
+			Outcome(Pass/fail): Pass, the result recipe list only displays recipes with match percentage of 
+							    over zero percent and displays correct percentage.
+		
+		Test Case 3: User preference listing
+			Expected Interaction: The user can choose to list results based on match percentage or alphabetical order
+								  for both ascending and descending order by clicking on the individual section headings.
+			Conditions/inputs: recipes are already displayed based on ingredients entered. input: click on section headings.
+			Outcome(Pass/fail): Pass, clicking on the sections headings correctly orders the result recipes in 
+								ascending or descending order. Clicking multiple times also cycles through the options. 
+					
+	3 - Browse individual result recipes
+		Description: The third priority is to allow the users to view the full details of an individual recipe 
+					 from the result list. The details include full ingredient list, description, directions.
+		
+		Test Case 1: Display recipe detail page
+			Expected Interaction: In the result recipe menu, the user should be able to double click on a individual
+								  recipe to take the user to a recipe page, where the details are presented
+			Conditions/inputs: ingredients are searched and result recipes are already displayed. Input: double click on 
+							   a recipe from the results menu
+			Outcome(Pass/fail): Pass, the double click takes the user to recipe detail section and also has options to 
+								navigate back to the home with back button.
+		
+		Test Case 2: Details include full ingredient list, description, directions
+			Expected Interaction: Every individual recipe detail page should include the full ingredient list, description
+								  and directions to make the dish. 
+			Conditions/inputs: result recipes are double clicked to check the details.
+			Outcome(Pass/fail): Passed to certain degree, the recipes' full ingredient list and description are displayed clearly. 		
+								However, the directions is displayed in the description section and not clearly shown for the user.
+		
+		Test Case 3: Provide substitute ingredients list 
+			Expected Interaction: Each recipe should have a substitute ingredients in case the user don't have required ingredient.
+								  This should be displayed in each individual recipe detail page.
+			Conditions/inputs: In each recipe's detail page, a separate menu should list substitute ingredient.
+			Outcome(Pass/fail): Fail. The team left this feature till the end because it was not fundamental to the program, but 
+								could not return to complete the feature in time. 
+			
+	4 - Add recipes
+		Description: The fourth priority is allow users to expand the recipe collection by adding full new recipes with name, 
+					 ingredients list, description, and directions. 
+		
+		Test Case 1: Direct add new recipe
+			Expected Interaction: In the home page, the user can directly click on "Add Recipe" to add new recipes. The button
+								  should present the user with the add recipe page that allows the user enter all the details
+								  of the recipe.
+			Conditions/inputs: User clicks on "Add Recipe" button 
+			Outcome(Pass/fail): Pass, button correctly takes the user to add recipe page for the user to enter a valid recipe
+								by filling all details sections for the recipe.
+		
+		Test Case 2: Indirect prompt to add new recipes
+			Expected Interaction: The user is prompted if they would like to add a recipe if the search for recipes results in	
+								  recipes found from the current recipe collection.
+			Conditions/inputs: entered ingredients that are included in any recipe from the recipe collection. This prompts the 
+							   to either add a new recipe or not.
+			Outcome(Pass/fail): Pass, a separate window prompts the user to add new recipe when there were no recipe matches.
+
+	5 - Favorite list
+		Description: The last priority was added recently to allow users to favorite or save recipes from the result recipe menu 
+					 to a favorite list. 
+		
+		Test Case 1: view favorite list
+			Expected Interaction: The user should be able to access his/her favorites list by using the top left file drop down menu
+								  and clicking "view favorites". This should present the user with the user's favorite list page of all		
+								  recipes added to the list.
+			Conditions/inputs:	Recipes are already to the favorites. input: click "view favorites" from the file drop down menu.
+			Outcome(Pass/fail): Pass, the "view favorites" correctly takes the user to the favorite recipes page and lists all the 
+								recipes added to the favorites.
+		
+		Test Case 1: add recipe to favorite list
+			Expected Interaction: The user should be able to add recipes to their favorite's list by clicking on the star in every
+								  recipe's detail page. The star should be highlighted if it is currently on the favorites list. If
+								  clicked again, the star should no longer be highlighted and removed from the favorites list.
+			Conditions/inputs: result recipes are already generated from search. inputs: the user goes to an individual recipe detail
+							   page and clicks on the star.
+			Outcome(Pass/fail): Pass, the star in the recipe detail page is highlighted and the recipes is listed under the 
+								"view favorites" page. un-highlighting the star also removes the recipe from the favorites recipes
+								list page.
+		
